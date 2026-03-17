@@ -10,8 +10,23 @@
 
 * This tool currently allows users to use json format to define processes and works with existing processes in 'Devops Deploy'.
 
+* Component as Configuration (CAC) extends this functionality to allow complete component management, including downloading entire components and uploading modified components.
+
+## Documentation Sections
+
+- [Usage](usage.md) - Complete command reference and examples for Component and Process CAC
+- [Downloads](downloads.md) - Available plugin versions
+- [Integrations](integrations.md) - Integration guides with CI/CD systems
+- [Limitations](limitations.md) - Known limitations and restrictions
+
 
 ## History
+
+### Version 3.4
+* Simplified teams and tags format using comma-separated strings instead of arrays
+* Enhanced component upload/download with automatic team and tag synchronization
+* Improved API endpoint documentation and error handling
+* Better validation for component properties and configurations
 
 ### Version 3.2
 * Supports tag-names instead of their IDs while upload/download.

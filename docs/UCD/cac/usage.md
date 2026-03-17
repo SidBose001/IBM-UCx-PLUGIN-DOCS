@@ -2,6 +2,324 @@
 
 ## List of All Commands:
 
+## Component as Configuration Commands
+
+### Component Management
+
+- **Download a Component**  
+  *Syntax*:  
+  `download-component <username> <password> <server-url> <component-name> <output-file>`  
+  *Example*:  
+
+        `download-component myuser mypassword https://url:8443 MyComponent MyComponent.json`
+    
+        `download-component myuser mypassword https://url:8443 MyComponent MyComponent.yaml`
+
+- **Upload a Component**  
+  *Syntax*:  
+  `upload-component <username> <password> <server-url> <cac-file>`  
+  *Example*:  
+
+        `upload-component myuser mypassword https://url:8443 MyComponent.json`
+    
+        `upload-component myuser mypassword https://url:8443 MyComponent.yaml`
+
+## Component CAC Structure
+
+A Component CAC file contains the complete definition of a component including its properties and configurations.
+
+### Real-World Example
+
+Here's an actual Component CAC JSON file structure with all the fields
+### JSON Structure
+
+```json5
+{
+  "name": "CAC-Standard-Component-Model",
+  "description": "Reusable component definition with environment, resource, and version configurations",
+  "componentType": "STANDARD",
+  "defaultVersionType": "INCREMENTAL",
+  "importAutomatically": true,
+  "cleanupDaysToKeep": 0,
+  "cleanupCountToKeep": 0,
+  "sourceConfigPluginName": "",
+  "properties": {
+    "environment": [
+      {
+        "name": "env-notes",
+        "type": "TEXTAREA",
+        "required": true,
+        "label": "Environment Notes",
+        "description": "Notes related to deployment environment",
+        "default": "Provide environment-specific details"
+      },
+      {
+        "name": "enable-feature-flag",
+        "type": "CHECKBOX",
+        "required": "checkbox",
+        "label": "Enable Feature Flag",
+        "description": "Toggle to enable or disable feature",
+        "default": false
+      }
+    ],
+    "resource": [
+      {
+        "name": "resource-validation-list",
+        "type": "MULTI_SELECT",
+        "required": "multi-select",
+        "allowedValues": [
+          {
+            "label": "Option1,Option2,Option3",
+            "value": "Option1,Option2,Option3"
+          }
+        ],
+        "label": "Resource Validation Options",
+        "description": "Select applicable resource validation options"
+      },
+      {
+        "name": "resource-profile-selector",
+        "type": "SELECT",
+        "required": true,
+        "allowedValues": [
+          {
+            "label": "Profile A",
+            "value": "Profile A"
+          },
+          {
+            "label": "Profile B",
+            "value": "Profile B"
+          },
+          {
+            "label": "Profile C",
+            "value": "Profile C"
+          }
+        ],
+        "label": "Resource Profile Selector"
+      }
+    ],
+    "version": [
+      {
+        "name": "enable-versioning",
+        "type": "CHECKBOX",
+        "required": "checkbox",
+        "label": "Enable Versioning",
+        "description": "Flag to enable version control",
+        "default": false
+      },
+      {
+        "name": "version-validation",
+        "type": "CHECKBOX",
+        "required": "checkbox",
+        "label": "Version Validation",
+        "description": "Validate version before deployment",
+        "default": false
+      }
+    ],
+    "component": {
+      "component-config-value": {
+        "value": "UpdatedValue",
+        "description": "General component configuration value",
+        "secure": false
+      },
+      "component-secure-token": {
+        "value": "crypt_v1{AES/CBC/PKCS5Padding|key|encryptedValue}",
+        "description": "Secure token for component",
+        "secure": true
+      }
+    },
+    "sourceConfig": {
+      "TFSComponentProperties": {
+        "tfs-username": "admin",
+        "tfs-password": "crypt_v1{AES/CBC/PKCS5Padding|key|encryptedValue}",
+        "prependBuildDefinition": true,
+        "buildQuality": "",
+        "dirOffset": "",
+        "includes": "",
+        "excludes": "",
+        "extensions": "",
+        "saveFileExecuteBits": true,
+        "tfs-project-name": "myproject",
+        "tfs-repo-url": "https://tfs.example.com",
+        "tfs-build-status": "PARTIALLY_SUCCEEDED",
+        "tfs-build-definition": "mybuild"
+      }
+    }
+  },
+  "processes": "CAC Component Deployment Process",
+  "teams": "Component Engineering Team",
+  "tags": "CAC, COMPONENT, STANDARD"
+}
+```
+### YAML Structure
+```yaml
+name: "CAC-Standard-Component-Model"
+description: "Reusable component definition with environment, resource, and version configurations"
+componentType: "STANDARD"
+defaultVersionType: "INCREMENTAL"
+importAutomatically: true
+cleanupDaysToKeep: 0
+cleanupCountToKeep: 0
+sourceConfigPluginName: ""
+
+properties:
+  environment:
+    - name: "env-notes"
+      type: "TEXTAREA"
+      required: true
+      label: "Environment Notes"
+      description: "Notes related to deployment environment"
+      default: "Provide environment-specific details"
+
+    - name: "enable-feature-flag"
+      type: "CHECKBOX"
+      required: "checkbox"
+      label: "Enable Feature Flag"
+      description: "Toggle to enable or disable feature"
+      default: false
+
+  resource:
+    - name: "resource-validation-list"
+      type: "MULTI_SELECT"
+      required: "multi-select"
+      allowedValues:
+        - label: "Option1,Option2,Option3"
+          value: "Option1,Option2,Option3"
+      label: "Resource Validation Options"
+      description: "Select applicable resource validation options"
+
+    - name: "resource-profile-selector"
+      type: "SELECT"
+      required: true
+      allowedValues:
+        - label: "Profile A"
+          value: "Profile A"
+        - label: "Profile B"
+          value: "Profile B"
+        - label: "Profile C"
+          value: "Profile C"
+      label: "Resource Profile Selector"
+
+  version:
+    - name: "enable-versioning"
+      type: "CHECKBOX"
+      required: "checkbox"
+      label: "Enable Versioning"
+      description: "Flag to enable version control"
+      default: false
+
+    - name: "version-validation"
+      type: "CHECKBOX"
+      required: "checkbox"
+      label: "Version Validation"
+      description: "Validate version before deployment"
+      default: false
+
+  component:
+    component-config-value:
+      value: "UpdatedValue"
+      description: "General component configuration value"
+      secure: false
+
+    component-secure-token:
+      value: "crypt_v1{AES/CBC/PKCS5Padding|key|encryptedValue}"
+      description: "Secure token for component"
+      secure: true
+
+  sourceConfig:
+    TFSComponentProperties:
+      tfs-username: "admin"
+      tfs-password: "crypt_v1{AES/CBC/PKCS5Padding|key|encryptedValue}"
+      prependBuildDefinition: true
+      buildQuality: ""
+      dirOffset: ""
+      includes: ""
+      excludes: ""
+      extensions: ""
+      saveFileExecuteBits: true
+      tfs-project-name: "myproject"
+      tfs-repo-url: "https://tfs.example.com"
+      tfs-build-status: "PARTIALLY_SUCCEEDED"
+      tfs-build-definition: "mybuild"
+
+processes: "CAC Component Deployment Process"
+tags: "CAC, COMPONENT, STANDARD"
+teams: "Component Engineering Team"
+```
+
+### Field Descriptions
+
+#### Component Metadata
+- **name**: The unique identifier for the component
+- **description**: Human-readable description of the component
+- **componentType**: Type of component (STANDARD)
+- **defaultVersionType**: Version numbering strategy (INCREMENTAL, FULL, etc.)
+- **importAutomatically**: Whether to automatically import versions
+- **cleanupDaysToKeep/cleanupCountToKeep**: Cleanup policies for old versions
+- **sourceConfigPluginName**: Name of the source configuration plugin
+
+#### Properties Structure
+The `properties` object contains four main sections:
+
+1. **environment**: Environment-level properties
+2. **resource**: Resource-level properties  
+3. **version**: Version-level properties
+4. **component**: Component-level properties
+5. **sourceConfig**: Source configuration plugin properties
+
+Each property definition includes:
+- **name**: Internal property name
+- **type**: Property type (TEXT, TEXTAREA, CHECKBOX, SELECT, MULTI_SELECT)
+- **required**: Whether the property is required
+- **label**: User-friendly display label
+- **description**: Property description
+- **default**: Default value
+- **allowedValues**: For SELECT/MULTI_SELECT types, list of allowed values
+- **secure**: For component properties, indicates if the value is encrypted
+
+#### Team Mappings
+- **teams**: A Comma separated list  of team assignments for the component
+
+#### Tags
+- **tags**: A Comma separated list tags for categorization and filtering
+
+
+## Workflow Integration
+
+### Workflow Scenarios
+
+#### Scenario 1: Modify Component Metadata 
+
+Use component upload/download when you need to change component-level settings:
+
+```sh
+# Download the component definition
+download-component admin admin https://localhost:8443 MyWebApp MyWebApp.json
+
+# Edit MyWebApp.json to update:
+# - teams: "Team1, Team2, NewTeam"
+# - tags: "Production, Critical"
+# - property definitions
+# - cleanup policies
+# - source configuration
+
+# Upload the modified component
+upload-component admin admin https://localhost:8443 MyWebApp.json
+```
+#### Scenario 2: Create New Component from Scratch
+
+```sh
+# Create a new component from the CAC JSON file with all required fields
+# (See examples above for structure)
+
+# Upload to create the component
+upload-component admin admin https://localhost:8443 NewComponent.json
+
+# Verify it was created correctly
+download-component admin admin https://localhost:8443 NewComponent verify.json
+```
+
+## Process as Configuration Commands
+
 - **Download a Generic Process**  
   *Syntax*:  
   `download-generic-process <username> <password> <server-url> <process-name> <output-file>`  
