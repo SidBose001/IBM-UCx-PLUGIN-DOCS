@@ -318,6 +318,327 @@ upload-component admin admin https://localhost:8443 NewComponent.json
 download-component admin admin https://localhost:8443 NewComponent verify.json
 ```
 
+## Application as Configuration Commands
+
+### Application Management
+
+- **Download an Application**  
+  *Syntax*:  
+  `download-application <username> <password> <server-url> <application-name> <output-file>`  
+  *Example*:  
+
+        `download-application admin admin https://localhost:8443 MyApplication MyApplication.json`
+    
+        `download-application admin admin https://localhost:8443 MyApplication MyApplication.yaml`
+
+- **Upload an Application**  
+  *Syntax*:  
+  `upload-application <username> <password> <server-url> <cac-file>`  
+  *Example*:  
+
+        `upload-application admin admin https://localhost:8443 cacapp.json`
+    
+        `upload-application admin admin https://localhost:8443 cacapp.yaml`
+
+## Application CAC Structure
+
+An Application CAC file contains the complete definition of an application including its properties, components, environments, processes, teams, and tags.
+
+### Real-World Example
+
+Here's an actual Application CAC JSON file structure with all the fields
+
+### JSON Structure
+
+```json5
+{
+  "type": "application",
+  "name": "CAC Application",
+  "description": "Cac App Desc",
+  "settings": {
+    "enforceCompleteSnapshots": false,
+    "onlyChangedVersions": true
+  },
+  "notificationSchemeName": "Default Notification Scheme",
+  "properties": [
+    {
+      "name": "app-prop",
+      "value": "app-prop-test-123",
+      "description": "app-prop-test",
+      "secure": false
+    }
+  ],
+  "components": "CAC-Canonical-Component-Model",
+  "environments": "DEV, DEV1, DEV2, FINAL-TEST-ENV",
+  "processes": "Test App Process",
+  "teams": "Standard App Team",
+  "tags": "TAG_API, Test"
+}
+```
+
+### YAML Structure
+
+```yaml
+type: "application"
+name: "CAC Application"
+description: "Cac App Desc"
+settings:
+  enforceCompleteSnapshots: false
+  onlyChangedVersions: true
+notificationSchemeName: "Default Notification Scheme"
+properties:
+  - name: "app-prop"
+    value: "app-prop-test-123"
+    description: "app-prop-test"
+    secure: false
+components: "CAC-Canonical-Component-Model"
+environments: "DEV, DEV1, DEV2, FINAL-TEST-ENV"
+processes: "Test App Process"
+teams: "Standard App Team"
+tags: "TAG_API, Test"
+```
+
+### Field Descriptions
+
+#### Application Metadata
+- **type**: Must be "application" for application CAC files
+- **name**: The unique identifier for the application
+- **description**: Human-readable description of the application
+
+#### Settings
+- **enforceCompleteSnapshots**: Whether to enforce complete snapshots for deployments
+- **onlyChangedVersions**: Whether to deploy only changed versions
+
+#### Notification Configuration
+- **notificationSchemeName**: Name of the notification scheme to use (e.g., "Default Notification Scheme")
+
+#### Properties
+Application-level properties defined as an array of objects:
+- **name**: Internal property name
+- **value**: Property value
+- **description**: Property description
+- **secure**: Boolean indicating if the value is encrypted (use `****` for secure values)
+
+#### Resource Mappings
+- **components**: Comma-separated list of component names associated with this application
+- **environments**: Comma-separated list of environment names for this application
+- **processes**: Comma-separated list of application process names
+
+#### Team Mappings
+- **teams**: Comma-separated list of team assignments for the application
+
+#### Tags
+- **tags**: Comma-separated list of tags for categorization and filtering
+
+## Application Workflow Integration
+
+### Workflow Scenarios
+
+#### Scenario 1: Create New Application
+
+```sh
+# Create application CAC file with required components, processes, and environments
+# (See Application CAC Structure above for structure)
+
+# Upload to create the application
+upload-application admin admin https://localhost:8443 MyApp.json
+```
+
+#### Scenario 2: Modify Application Settings
+
+```sh
+# Download the application definition
+download-application admin admin https://localhost:8443 "CAC Application" app.json
+
+# Edit app.json to update:
+# - settings (enforceCompleteSnapshots, onlyChangedVersions)
+# - properties
+# - teams
+# - tags
+# - notification scheme
+# - components (add or remove component names to link/unlink components)
+
+# Upload the modified application
+upload-application admin admin https://localhost:8443 app.json
+```
+
+## Environment as Configuration Commands
+
+### Environment Management
+
+- **Download an Environment**  
+  *Syntax*:  
+  `download-environment <username> <password> <server-url> <environment-name> <application-name> <output-file>`  
+  *Example*:  
+
+        `download-environment admin admin https://localhost:8443 "DEV" "MyApplication" env.json`
+    
+        `download-environment admin admin https://localhost:8443 "DEV" "MyApplication" env.yaml`
+
+- **Upload an Environment**  
+  *Syntax*:  
+  `upload-environment <username> <password> <server-url> <cac-file>`  
+  *Example*:  
+
+        `upload-environment admin admin https://localhost:8443 cacenv.json`
+    
+        `upload-environment admin admin https://localhost:8443 cacenv.yaml`
+
+## Environment CAC Structure
+
+An Environment CAC file contains the complete definition of an environment linked to an application, including its properties, cleanup policies, approval settings, and resource mappings.
+
+### Real-World Example
+
+Here's an actual Environment CAC JSON file structure with all the fields
+
+### JSON Structure
+
+```json5
+{
+  "type": "environment",
+  "name": "DEV",
+  "applicationName": "CAC Application",
+  "description": "Dev Environment Test",
+  "cleanupCountToKeep": 0,
+  "cleanupDaysToKeep": 0,
+  "snapshotDaysToKeep": 0,
+  "useSystemDefaultDays": true,
+  "historyCleanupDaysToKeep": 0,
+  "inheritSystemCleanup": false,
+  "lockSnapshots": true,
+  "noSelfApprovals": true,
+  "requireApprovals": false,
+  "requireSnapshot": true,
+  "externalApprovalAgent": "Agent_1.0",
+  "externalApprovalAgentPool": "",
+  "externalApprovalProcess": "19cf53f3-de75-94cf-1858-f696900ea8f8",
+  "environment-properties": {
+    "env-prop-1": {
+      "value": "Test Props",
+      "description": "Props for Env",
+      "secure": false
+    },
+    "env-prop-2": {
+      "value": "****",
+      "description": "Environment Property",
+      "secure": true
+    }
+  },
+  "teams": "Standard Component",
+  "baseResources": [
+    {
+      "name": "/CreatePlanResource/Agent_1.0"
+    }
+  ]
+}
+```
+
+### YAML Structure
+
+```yaml
+type: "environment"
+name: "DEV"
+applicationName: "CAC Application"
+description: "Dev Environment Test"
+cleanupCountToKeep: 0
+cleanupDaysToKeep: 0
+snapshotDaysToKeep: 0
+useSystemDefaultDays: true
+historyCleanupDaysToKeep: 0
+inheritSystemCleanup: false
+lockSnapshots: true
+noSelfApprovals: true
+requireApprovals: false
+requireSnapshot: true
+externalApprovalAgent: "Agent_1.0"
+externalApprovalAgentPool: ""
+externalApprovalProcess: "19cf53f3-de75-94cf-1858-f696900ea8f8"
+environment-properties:
+  env-prop-1:
+    value: "Test Props"
+    description: "Props for Env"
+    secure: false
+  env-prop-2:
+    value: "****"
+    description: "Environment Property"
+    secure: true
+teams: "Standard Component"
+baseResources:
+  - name: "/CreatePlanResource/Agent_1.0"
+```
+
+### Field Descriptions
+
+#### Environment Metadata
+- **type**: Must be "environment" for environment CAC files
+- **name**: The unique identifier for the environment
+- **applicationName**: The name of the application this environment belongs to (required)
+- **description**: Human-readable description of the environment
+
+#### Cleanup Policies
+- **cleanupCountToKeep**: Number of versions to keep (0 = unlimited)
+- **cleanupDaysToKeep**: Number of days to keep versions (0 = unlimited)
+- **snapshotDaysToKeep**: Number of days to keep snapshots (0 = unlimited)
+- **useSystemDefaultDays**: Whether to use system default cleanup days
+- **historyCleanupDaysToKeep**: Number of days to keep history (0 = unlimited)
+- **inheritSystemCleanup**: Whether to inherit system cleanup settings
+
+#### Snapshot and Approval Settings
+- **lockSnapshots**: Whether to lock snapshots after deployment
+- **noSelfApprovals**: Whether to prevent self-approvals
+- **requireApprovals**: Whether approvals are required for deployments
+- **requireSnapshot**: Whether a snapshot is required for deployments
+
+#### External Approval Configuration
+- **externalApprovalAgent**: Name of the agent for external approvals
+- **externalApprovalAgentPool**: Agent pool for external approvals (can be empty)
+- **externalApprovalProcess**: UUID of the external approval process
+
+#### Environment Properties
+Environment-level properties defined as a key-value object:
+- **key**: Property name
+- **value**: Property value (use `****` for secure properties)
+- **description**: Property description
+- **secure**: Boolean indicating if the value is encrypted
+
+#### Team Mappings
+- **teams**: Comma-separated list of team assignments for the environment
+
+#### Base Resources
+Array of resource objects that define the base resources for this environment:
+- **name**: Full path to the resource (e.g., "/CreatePlanResource/Agent_1.0")
+
+## Environment Workflow Integration
+
+### Workflow Scenarios
+
+#### Scenario 1: Create New Environment for Application
+
+```sh
+# Create environment CAC file for the application
+# (See Environment CAC Structure above for structure)
+
+# Upload environment
+upload-environment admin admin https://localhost:8443 dev-env.json
+```
+
+#### Scenario 2: Update Environment Configuration
+
+```sh
+# Download the environment definition
+download-environment admin admin https://localhost:8443 "DEV" "CAC Application" dev-env.json
+
+# Edit dev-env.json to update:
+# - cleanup policies
+# - approval settings
+# - environment properties
+# - base resources
+# - teams
+
+# Upload the modified environment
+upload-environment admin admin https://localhost:8443 dev-env.json
+```
 ## Process as Configuration Commands
 
 - **Download a Generic Process**  
