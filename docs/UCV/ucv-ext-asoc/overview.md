@@ -6,13 +6,17 @@ The HCL AppScan on Cloud (ASoC) plug-in allows for integration with the HCL Apps
 
 ## Compatibility
 
-Must be running DevOps Velocity version 1.2.1 and later to use this plug-in.
+Must be running DevOps Velocity version 2.5.0 and later to use this plug-in.
 
 ## Versions
 
 DevOps Velocity plug-in images are located in DockerHub. To view available versions, see the [UrbanCode DockerHub](https://hub.docker.com/r/urbancode/ucv-ext-asoc/tags).
 
 ## History
+
+### Version 3.0.27
+
+* Fixed an issue with the getEndpoint call caused by an API change.
 
 ### Version 3.0.25
 

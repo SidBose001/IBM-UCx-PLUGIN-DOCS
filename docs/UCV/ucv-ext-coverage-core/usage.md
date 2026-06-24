@@ -44,10 +44,10 @@ step([$class: 'UploadMetricsFile',  appName: 'My Code-Coverage Test', dataFormat
 'cobertura', filePath: '<location of the code coverage report>', name: 'my-code_coverage-test', pluginType:
 'coverageData', tenantId: '<tenant Id>', testSetName: 'code_coverage', metricsRecordUrl: "``${env.BUILD_URL}``"])
 
-}``
-}``
-}``
-}``
+}
+}
+}
+}
 
 ```
 
@@ -61,18 +61,32 @@ about the snippet:
 * The URL points to the IBM DevOps Velocity quality data endpoint. Update with the server location for your installation of IBM DevOps Velocity.
 * The BODY of the call is a multipart/form data. It includes information about the payload.
 
-
+**For Velocity**
 ```
 
 METHOD: POST
-URL: https://<url_devopsvelocity_server>/reporting-consumer/metrics
+URL: https://<velocity_hostname>/reporting-consumer/metrics
 BODY
 (multipart/form-data):
 {
 payload: <json_object_string> // See below for schema format
 testArtifact:
 <cobertura/etc_xml_file>
-}``
+}
+
+```
+**For Loop**
+```
+
+METHOD: POST
+URL: https://<loop_hostname>/velocity/reporting-consumer/metrics
+BODY
+(multipart/form-data):
+{
+payload: <json_object_string> // See below for schema format
+testArtifact:
+<cobertura/etc_xml_file>
+}
 
 ```
 
@@ -87,9 +101,9 @@ The following shows the schema for the payload. Replace the angle brackets with 
 "metricName":
 "<metric_name>", // optional: name for recurring test set
 "application": {
-"name": "<application_name>"  //Name
+"name": "<application_name>"  // required application name
 of application
-}``,
+},
 "record": {
 "recordName": "<record_name>", // optional: Name for this record
 
@@ -99,41 +113,63 @@ of application
 "cobertura",       // cobertura, lcov, jacoco
 "metricsRecordUrl": "<Jenkins_build_url>" // optional: To link the
 Jenkins build with test results
-}``,
+},
 "build": {  // Optional: One of the following fields must be included
 
 "buildId": "<build_id>",
 "jobExternalId": "<external_job_id>",
 "url": "<build_url>",
-}``,
+},
 "commitId":
 "<commit_id>",  // optional
 "pullRequestId": "<pullrequest_id>", // optional
 "environment": "<environment_name>"
 // optional
-}``
+}
 
 ```
 
 ### Example using Curl
 
-
+**For Velocity**
 ```
 
 curl --request POST \
---url https:///reporting-
-consumer/metrics \
+--url https://<velocity_hostname>/reporting-consumer/metrics \
 --form 'payload={
 "tenant_id": "*tenant\_id*",
 "application": {
 "name": "My
 Application"
-}``,
+},
 "record": {
 "pluginType": "coverageData",
 "dataFormat": "cobertura"
-}``
-}``
+}
+}
+' \
+
+--form testArtifact=@test-result/junit.xml
+
+```
+
+**For Loop**
+
+```
+
+curl --request POST \
+--url https://<loop_hostname>/velocity/reporting-consumer/metrics \
+--form 'payload={
+"tenant_id": "*tenant\_id*",
+"application": {
+"name": "My
+Application"
+},
+"record": {
+"pluginType": "coverageData",
+"dataFormat": "cobertura"
+}
+}
 ' \
 
 --form testArtifact=@test-result/junit.xml

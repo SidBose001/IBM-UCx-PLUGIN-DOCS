@@ -15,6 +15,21 @@ No special steps are required for installation. See [Installing plug-ins in DevO
 
 ## History
 
+### Version 23
+
+* Update Apache Log4j to 2.25.4
+
+Addresses multiple non-exploitable CVEs:
+CVE-2026-34477, CVE-2026-34478, CVE-2026-34479, CVE-2026-34480, CVE-2026-34481
+
+### Version  22
+
+Update Apache log4j to 2.25.3 for non-exploitable CVE-2025-68161
+
+### Version  21
+
+Update commons-lang to 3.18 resolves finding for non-exploitable CVE-2025-48924
+
 ### Version 20
 
 Updating Jettison library to 1.5.4 for CVE-2023-1436

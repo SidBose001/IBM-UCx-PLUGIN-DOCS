@@ -2,11 +2,15 @@
 
 This plugin provides a mechanism to send SMTP emails in your deployment process.
 
+> Starting with version 4, the SMTP plugin is officially supported by IBM and is no longer classified as a community-driven plugin.
+
 ## History
 
 ### Version 4
 
 * Converted code from Groovy to Java.
+* DT444811 - Fixed NoClassDefFoundError Issue
+* Updated plugin description and fixed NoClassDefFoundError for LoggerContext
 
 ### Version 3
 

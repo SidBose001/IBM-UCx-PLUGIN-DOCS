@@ -18,10 +18,17 @@
 
 The endpoint URL needed for the webhook is described below.
 
+**For Velocity**
 
 | Name | Path | Method |
 | --- | --- | --- |
-| SonarQube Callback | https://IBM_DevOps_velocity_hostname/reporting-consumer/pluginEndpoint/integration_id/sonarqube/callback | Post |
+| SonarQube Callback | https://<velocity_hostname>/reporting-consumer/pluginEndpoint/integration_id/sonarqube/callback | Post |
+
+**For Loop**
+
+| Name | Path | Method |
+| --- | --- | --- |
+| SonarQube Callback | https://<loop_hostname>/velocity/reporting-consumer/pluginEndpoint/integration_id/sonarqube/callback | Post |
 
 ## Setup
 
@@ -30,7 +37,7 @@ The endpoint URL needed for the webhook is described below.
 Each external data source should have its own integration, with multiple integrations per plugin type. SonarQube integrations are created from the SonarQube plugin type and can be added three different ways:
 
 1. The user interface provided on the settings/integration page (as of Velocity 1.2.6)
-2. POST request to https://:/reporting-consumer/integration
+2. POST request to https://reporting-consumer/integration
 3. Uploading a Value Stream Map JSON file
 
 The parameters for adding a SonarQube integration are summarized in the table below. The usual preference is to create an integration through the UI; however, sometimes it is necessary to use the API. An example POST request is provided below as part of a curl command to add an integration. It is important to pay attention to the response, since it will contain the integration ID to construct the endpoint URL. The endpoint URL is needed for the second step of creating a webhook in SonarQube.
@@ -44,12 +51,12 @@ The parameters for adding a SonarQube integration are summarized in the table be
 | SonarQube Auth Token | Secure | The SonarQube authentication token. You can use a previously generated token or generate a new token in SonarQube. | Yes |
 | SonarQube URL | String | The base URL of the SonarQube server including the port number. For example: “http://sonarQubeHost:9000”. | Yes |
 
-
+**For Velocity**
 ```
 
 curl -k --request POST \
 --url
-https://<*velocityHostname:port*>/reporting-consumer/integration \
+https://<velocity_hostname>/reporting-consumer/integration \
 --header 'content-type: application/json' \
 
 --data '{
@@ -63,8 +70,31 @@ https://<*velocityHostname:port*>/reporting-consumer/integration \
 "authToken": "<*sonarqubeAuthToken*>",
 "velocityAccessKey":
 "<*VelocityAccessKey*>"
-}``
-}``'
+}
+}'
+
+```
+**For Loop**
+```
+
+curl -k --request POST \
+--url
+https://<loop_hostname>/velocity/reporting-consumer/integration \
+--header 'content-type: application/json' \
+
+--data '{
+"type": "sonarqubePlugin",
+"tenant_id": "5ade13625558f2c6688d15ce",
+
+"name": "<*integrationName*>",
+"properties": {
+"url":
+"<*sonarqubeUrl*>",
+"authToken": "<*sonarqubeAuthToken*>",
+"velocityAccessKey":
+"<*VelocityAccessKey*>"
+}
+}'
 
 ```
 

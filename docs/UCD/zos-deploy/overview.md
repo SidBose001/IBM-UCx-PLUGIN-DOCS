@@ -44,6 +44,30 @@ No special steps are required for installation. See [Installing plug-ins in DevO
 
 ## History
 
+### Version 105
+
+* 1189136 - Upgraded 'Deploy dataset and USS files' plugin step property 'Update Deploy timestamp for PDS' to 'Update Deploy userid and timestamp' to update both user-id and deploy-timestamp. Refer Usage page for more information.
+* 1189524 - Support deploying linked version over incremental version
+* 1189524 - Added support for alias for v2 package format 
+* 1190018 - Update ZInventory logic for linked version when FromVersion is unavailable, or it is not a linked version
+* 1190018 - Enhancements to submit job step
+* 1190073 - Increased space for temp dataset
+
+### Version 104
+
+* Added new step to create a sub version from an existing version
+
+### Version 103
+
+* 103.1187825 - Added Run in Parallel option to Submit Job step to submit all jobs first and then wait for each job to complete instead of submitting and waiting for each job. This option is helpful when there are multiple independent jobs to submit and wait for in the process.
+* 103.1187939 - Fixes KNOWN-ISSUE DT467811 (Rollback fails with java.io.IOException: Corrupted TAR archive.) and added retry logic to update ZInventory.
+* 103.1188441 - Fix RTCzMVSExec64 Not found in java.library.path error.
+* 103.1188887 - Fixes KNOWN-ISSUE DT470172; 'Update Deploy timestamp for PDS' is restricted to user ids that are 7 characters or lesser.
+
+### Version 102
+
+* 102.1187730 - Add option to update modified timestamp of PDS members in 'Deploy dataset and USS Files' plugin step. 
+
 ### Version 101
 
 * Option to skip deleting files in 'Deploy dataset and uss files' step

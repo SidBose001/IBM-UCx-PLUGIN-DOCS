@@ -2,6 +2,16 @@
 
 To download the plug-in, click the following version-specific links.
 
+- [devops-deploy-zos-deploy-105.1190073.zip](https://raw.githubusercontent.com/UrbanCode/IBM-UCD-PLUGINS/main/files/zos-deploy/devops-deploy-zos-deploy-105.1190073.zip)
+- [devops-deploy-zos-deploy-105.1190018.zip](https://raw.githubusercontent.com/UrbanCode/IBM-UCD-PLUGINS/main/files/zos-deploy/devops-deploy-zos-deploy-105.1190018.zip)
+- [devops-deploy-zos-deploy-105.1189524.zip](https://raw.githubusercontent.com/UrbanCode/IBM-UCD-PLUGINS/main/files/zos-deploy/devops-deploy-zos-deploy-105.1189524.zip)
+- [devops-deploy-zos-deploy-105.1189136.zip](https://raw.githubusercontent.com/UrbanCode/IBM-UCD-PLUGINS/main/files/zos-deploy/devops-deploy-zos-deploy-105.1189136.zip)
+- [devops-deploy-zos-deploy-104.1189042.zip](https://raw.githubusercontent.com/UrbanCode/IBM-UCD-PLUGINS/main/files/zos-deploy/devops-deploy-zos-deploy-104.1189042.zip)
+- [devops-deploy-zos-deploy-103.1188887.zip](https://raw.githubusercontent.com/UrbanCode/IBM-UCD-PLUGINS/main/files/zos-deploy/devops-deploy-zos-deploy-103.1188887.zip)
+- [devops-deploy-zos-deploy-103.1188441.zip](https://raw.githubusercontent.com/UrbanCode/IBM-UCD-PLUGINS/main/files/zos-deploy/devops-deploy-zos-deploy-103.1188441.zip)
+- [devops-deploy-zos-deploy-103.1187939.zip](https://raw.githubusercontent.com/UrbanCode/IBM-UCD-PLUGINS/main/files/zos-deploy/devops-deploy-zos-deploy-103.1187939.zip)
+- [devops-deploy-zos-deploy-103.1187825.zip](https://raw.githubusercontent.com/UrbanCode/IBM-UCD-PLUGINS/main/files/zos-deploy/devops-deploy-zos-deploy-103.1187825.zip)
+- [devops-deploy-zos-deploy-102.1187730.zip](https://raw.githubusercontent.com/UrbanCode/IBM-UCD-PLUGINS/main/files/zos-deploy/devops-deploy-zos-deploy-102.1187730.zip)
 - [devops-deploy-zos-deploy-101.1186159.zip](https://raw.githubusercontent.com/UrbanCode/IBM-UCD-PLUGINS/main/files/zos-deploy/devops-deploy-zos-deploy-101.1186159.zip)
 - [devops-deploy-zos-deploy-101.1185920.zip](https://raw.githubusercontent.com/UrbanCode/IBM-UCD-PLUGINS/main/files/zos-deploy/devops-deploy-zos-deploy-101.1185920.zip)
 - [devops-deploy-zos-deploy-100.1185462.zip](https://raw.githubusercontent.com/UrbanCode/IBM-UCD-PLUGINS/main/files/zos-deploy/devops-deploy-zos-deploy-100.1185462.zip)

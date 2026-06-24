@@ -11,22 +11,30 @@ The table below lists the compatible versions of the Jira plug-in and IBM DevOps
 
 | IBM DevOps Velocity Version | Jira plug-in version |
 | --- | --- |
-| 5.1.10 or later | 2.4.5 |
+| 5.2.5 or later | 2.4.13 |
+| 5.1.10 to 5.2.4 | 2.4.5 |
 | 3.1.0 to 5.1.9 | 2.4.3, 2.4.2, 2.3.24, 2.3.20, 2.3.17, 2.3.14, 2.3.12, 2.3.10, 2.3.9 |
  
 ## Upgrade notes
 
-Beginning with IBM DevOps Velocity version 2.4.0 users must enter a user access key is required to connect with the IBM DevOps Velocity server. If you are upgrading from a previous version, you must obtain and add the key to the IBM DevOps Velocity configuration property. If the user access key is not added, the integration fails. A proper JQL query must be provided while integration.
+Beginning with IBM DevOps Velocity version 2.4.0 users must enter a user access key is required to connect with the IBM DevOps Velocity server. If you are upgrading from a previous version, you must obtain and add the key to the IBM DevOps Velocity configuration property. If the user access key is not added, the integration fails. 
 
 ## JQL Query
 
-User can add their own customized JQL query for fetching specific issues . For further reference regarding JQL queries and how to use them , please follow the link https://confluence.atlassian.com/jirasoftwareserver0820/advanced-searching-1095249245.html
+User can add their own customized JQL query for fetching specific issues. For further reference regarding JQL queries and how to use them , please follow the link https://confluence.atlassian.com/jirasoftwareserver0820/advanced-searching-1095249245.html
 
 ## Versions
 
 IBM DevOps Velocity plug-in images are located in DockerHub. To view available versions, see the [UrbanCode DockerHub](https://hub.docker.com/r/urbancode/ucv-ext-jira/tags).
 
 ### History
+
+### Version 2.4.13
+
+* **SonarQube Coverage**: Improved test coverage for the Jira plugin.
+* **Vulnerability fix**: Addressed and resolved Whitesource-reported vulnerabilities.
+* **Enhancement**: Added support for Team and Teamspace fields in plugin integrations. These fields can now be configured during plugin setup and integration.
+* **Technical upgrade**: Upgraded the NPM Wrapper package to the latest supported version.
 
 ### Version 2.4.5
 

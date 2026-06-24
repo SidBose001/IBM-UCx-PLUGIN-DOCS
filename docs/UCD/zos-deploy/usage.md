@@ -13,6 +13,7 @@ The following pages provide usage information about this plug-in:
 * [Deploying by using the Job Monitor](#deploying-by-using-the-job-monitor)
 * [Submitting a JCL job and then checking for status](#submitting-a-jcl-job-and-then-checking-for-status)
 * [Submitting a JCL job from a template](#submitting-jcl-jobs-from-a-template)
+* [Submitting JCL jobs in parallel](#submitting-jcl-jobs-in-parallel)
 * [MVS component template](#mvs-component-template)
 * [Managing redundant versions](#managing-redundant-versions)
   * [Remove Redundant Versions](#remove-redundant-versions)
@@ -21,6 +22,8 @@ The following pages provide usage information about this plug-in:
 * [Using custom properties in deployments](#using-custom-properties-in-deployments)
 * [Deploying data sets and running CICS commands](#deploying-data-sets-and-running-cics-commands)
 * [Deploying HFS files](#deploying-hfs-files)
+* [Create Sub-Version from Version](#create-sub-version-from-version)
+* [Updating ISPF stats of PDS members](#updating-ispf-stats-of-pds-members)
 
 ## Running MVS system commands
 
@@ -169,6 +172,19 @@ To submit multiple jobs from the same template, specify multiple sets of rules i
 
 In the previous example, three jobs are submitted because three rule sets are specified in the **Replace Tokens For Each Job** field. The three jobs check the JKEMPMT, JKECMORT, and JKEMLIST members in that order. The rules that are specified in the **Replace Tokens** field are used for all jobs. Because **Stop On Fail** is selected, if any job fails no subsequent jobs are submitted. Finally, the **Max Return Code** field is set to 0 so that any return code greater than 0 is considered a job failure. For example, a return code of 4 from the LISTDS command, which indicates that a member name was not found, is considered a job failure.
 
+## Submitting JCL jobs in parallel
+
+From version 103 of the z/OS Utility plug-in, you can submit multiple JCL jobs in parallel.
+To submit JCL jobs in parallel, enable `Run in Parallel` option in the Submit Job step, and uncheck `Stop On Fail` option as shown below.
+
+[![submit_jobs_in_parallel](media/submit-jobs-in-parallel.png)](media/submit-jobs-in-parallel.png)
+
+When `Run in Parallel` is enabled, multiple jobs are submitted at the same time, and the step waits for all jobs to complete.
+The step status is success if all the jobs run to completion, and fail if any of the jobs fail.
+
+By default, the `Run in Parallel` option is disabled, and the jobs are submitted sequentially. 
+Enabling this option allows you to submit multiple jobs at the same time, which can reduce the total execution time of the step if the jobs are independent and can run concurrently.
+
 ## Processing multiple data sets or data set members
 
 Use the Generate Artifact Information step to process each data set or data set member in a version. In the following example, the process verifies that data set members are deployed.
@@ -260,3 +276,25 @@ The process runs the following steps in order:
 3. The [Wait For Job](https://urbancode.github.io/IBM-UCx-PLUGIN-DOCS/UCD/zos-deploy/steps.html) step stops processing until the JCL job completes.
 
 [![submit_job_wait](media/submit_job_wait.gif)](media/submit_job_wait.gif)
+
+## Create Sub-Version from Version
+
+The **Create Sub-Version from Version** step creates a sub-version from an existing version. 
+The new sub-version contains selective artifacts based on `includes` from the existing version, and is created in the same component as the existing version.
+
+[![create_subversion](media/create-subversion.png)](media/create-subversion.png)
+
+### Limitations of Create Sub-Version from Version step
+* Only artifacts of type MVS Data Set and MVS Data Set Member are supported.
+* Linked versions are not supported. If the source version has linked versions, the step fails.
+* Version with deleted artifacts are not supported. If the source version has deleted artifacts, the step fails.
+
+## Updating ISPF stats of PDS members
+
+* Deploy timestamp and user-id can be updated in the ISPF stats of PDS members that are not RECFM U.
+  * The default value is NONE, which means ISPF statistics are not updated with the deployment timestamp or user ID.
+  * If set to AGENT-ID, the plugin updates ISPF statistics with the deployment time and the agent ID.
+  * If deploy.update.userid is set to userid and that option is selected in the plugin, ISPF statistics are updated with the deployment time and the user ID mapped to that property. The plugin attempts to validate the existence of the user using the TSO command LISTUSER and hence the agent-id will need permissions to run this command when this option is used. When the userid is a blank, both modified-time and userid fields are not updated.
+
+[![update ispf stats](media/ispf-user-id.png)](media/ispf-user-id.png)
+

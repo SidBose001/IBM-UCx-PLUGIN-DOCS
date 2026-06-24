@@ -40,10 +40,23 @@ The following request sample shows a REST call that you can copy and update as n
 
 * The BODY of the call is a multipart/form data. It includes information about the payload.
 
+**For Velocity**
 ```
 
 METHOD: POST 
-URL: https://<url_ibm_devops_velocity_server>/reporting-consumer/metrics 
+URL: https://<velocity_hostname>/reporting-consumer/metrics 
+BODY (multipart/form-data):
+ {
+  payload: <payload_json_object_string> // See below for schema format
+ testArtifact: <junit_xml_file>
+ }
+
+```
+**For Loop**
+```
+
+METHOD: POST 
+URL: https://<loop_hostname>/velocity/reporting-consumer/metrics 
 BODY (multipart/form-data):
  {
   payload: <payload_json_object_string> // See below for schema format
@@ -54,9 +67,29 @@ BODY (multipart/form-data):
 
 ## Invoke using Curl
 
+**For Velocity**
 ```
 curl --request POST \
-  --url https://url_ibm_devops_velocity_server>/reporting-consumer/metrics \
+  --url https://<velocity_hostname>/reporting-consumer/metrics \
+  --form 'payload={
+  "tenant_id": "",
+  "application": {
+    "name": "My Application"
+  },
+  "record": {
+    "pluginType": "junitXML",
+    "dataFormat": "junitXML"
+  }
+}
+' \
+  --form testArtifact=@test-result/junit.xml
+
+```
+
+**For Loop**
+```
+curl --request POST \
+  --url https://<loop_hostname>/velocity/reporting-consumer/metrics \
   --form 'payload={
   "tenant_id": "",
   "application": {

@@ -20,6 +20,25 @@ No special steps are required for installation. See [Installing plug-ins in DevO
 
 ## History
 
+### Version 25
+
+Update Apache Log4j to 2.25.4
+
+Addresses multiple non-exploitable CVEs:
+CVE-2026-34477, CVE-2026-34478, CVE-2026-34479, CVE-2026-34480, CVE-2026-34481
+
+### Version 24
+
+Update Apache log4j to 2.25.3 for non-exploitable CVE-2025-68161
+
+### Version 23
+
+Remove dependence on native code for Windows.
+
+### Version 22
+
+Update commons-lang to 3.18 resolves finding for non-exploitable CVE-2025-48924 
+
 ### Version 21
 
 Updated securedata library, so that it will not fail to initialize if AES256 is unsupported.
